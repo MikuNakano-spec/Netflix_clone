@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Danh sách kho hàng</title>
+</head>
+<body>
+    <h1>Danh sách kho hàng</h1>
+    <ul>
+        {% for warehouse in warehouses %}
+            <li>
+                <strong>{{ warehouse.name }}</strong> (Sức chứa: {{ warehouse.capacity }})
+                <p>Chủ sở hữu: {{ warehouse.owner }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

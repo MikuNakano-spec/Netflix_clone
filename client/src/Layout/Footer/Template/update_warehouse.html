@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Cập nhật kho hàng</title>
+</head>
+<body>
+    <h1>Cập nhật kho hàng</h1>
+    <form id="update-warehouse-form">
+        <label for="name">Tên kho hàng:</label>
+        <input type="text" id="name" name="name" value="{{ warehouse.name }}"><br><br>
+
+        <label for="capacity">Sức chứa:</label>
+        <input type="number" id="capacity" name="capacity" value="{{ warehouse.capacity }}"><br><br>
+
+        <label for="owner">Chủ sở hữu:</label>
+        <input type="text" id="owner" name="owner" value="{{ warehouse.owner }}"><br><br>
+
+        <button type="button" onclick="updateWarehouse()">Cập nhật kho hàng</button>
+    </form>
+</body>
+<script>
+    function updateWarehouse() {
+        var name = document.getElementById('name').value;
+        var capacity = document.getElementById('capacity').value;
+        var owner = document.getElementById('owner').value;
+
+        var data = {
+            "name": name,
+            "capacity": capacity,
+            "owner": owner
+        };
+
+        fetch('/warehouse/{{ warehouse_id }}', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            // Redirect or update the page as needed
+        })
+        .catch(error => { // Corrected this line
+            console.error('Error:', error);
+        });
+    }
+</script>
+</html>

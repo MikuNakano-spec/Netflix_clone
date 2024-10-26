@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Xóa kho hàng</title>
+</head>
+<body>
+    <h1>Xóa kho hàng</h1>
+    <p>Bạn có chắc chắn muốn xóa kho hàng "{{ warehouse.name }}"?</p>
+    <button type="button" onclick="deleteWarehouse()">Xóa kho hàng</button>
+</body>
+<script>
+    function deleteWarehouse() {
+        fetch('/warehouse/{{ warehouse_id }}', {
+            method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            // Redirect or update the page as needed
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+</html>

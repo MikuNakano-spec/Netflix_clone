@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Tạo kho hàng mới</title>
+</head>
+<body>
+    <h1>Tạo kho hàng mới</h1>
+    <form id="create-warehouse-form">
+        <label for="name">Tên kho hàng:</label>
+        <input type="text" id="name" name="name"><br><br>
+
+        <label for="capacity">Sức chứa:</label>
+        <input type="number" id="capacity" name="capacity"><br><br>
+
+        <label for="owner">Chủ sở hữu:</label>
+        <input type="text" id="owner" name="owner"><br><br>
+
+        <button type="button" onclick="createWarehouse()">Tạo kho hàng</button>
+    </form>
+</body>
+<script>
+    function createWarehouse() {
+        var name = document.getElementById('name').value;
+        var capacity = document.getElementById('capacity').value;
+        var owner = document.getElementById('owner').value;
+
+        var data = {
+            "name": name,
+            "capacity": capacity,
+            "owner": owner
+        };
+
+        fetch('/warehouse', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            // Redirect or update the page as needed
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+</html>
